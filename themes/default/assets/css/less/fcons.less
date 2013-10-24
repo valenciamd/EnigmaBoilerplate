@@ -1,0 +1,79 @@
+/******************************************************************************************/
+/* G-Cons Icon Styles
+/******************************************************************************************/
+
+@fSpriteWidth    :   80px;
+@fSpriteHeight    :   80px;
+
+.fcon(@x, @y){
+    background-position: -(@x*@fSpriteWidth) -(@y*@fSpriteHeight);
+}
+
+.fcon{
+    width:80px;
+    height:80px;
+    padding:20px;
+    .inline-block();
+    &:after{
+        content:'';
+        background:url(../images/icons/fcons.png) no-repeat;
+        width:80px;
+        height:80px;
+        position:relative;
+        margin:0 auto;
+        .inline-block();
+    }
+    &.lock:after{.fcon(0,0);}
+    &.robot:after{.fcon(1,0);}
+    &.diamond:after{.fcon(2,0);}
+    &.brush:after{.fcon(3,0);}
+    &.screen:after{.fcon(4,0);}
+    &.gift:after{.fcon(5,0);}
+    &.bolt:after{.fcon(6,0);}
+    &.ribbon:after{.fcon(7,0);}
+
+    &.coffee:after{.fcon(0,1);}
+    &.rocket:after{.fcon(1,1);}
+    &.microphone:after{.fcon(2,1);}
+    &.save:after{.fcon(3,1);}
+    &.briefcase:after{.fcon(4,1);}
+    &.graph:after{.fcon(5,1);}
+    &.date:after{.fcon(6,1);}
+    &.user:after{.fcon(7,1);}
+
+    &.ufo:after{.fcon(0,2);}
+    &.movie:after{.fcon(1,2);}
+    &.home:after{.fcon(2,2);}
+    &.chat:after{.fcon(3,2);}
+    &.message:after{.fcon(4,2);}
+    &.clock:after{.fcon(5,2);}
+    &.iphone:after{.fcon(6,2);}
+    &.pencil:after{.fcon(7,2);}
+
+    &.skull:after{.fcon(0,3);}
+    &.thumbs-down:after{.fcon(1,3);}
+    &.heart:after{.fcon(2,3);}
+    &.switch:after{.fcon(3,3);}
+    &.folder:after{.fcon(4,3);}
+    &.search:after{.fcon(5,3);}
+    &.envelope:after{.fcon(6,3);}
+    &.flag:after{.fcon(7,3);}
+
+    &.crown:after{.fcon(0,4);}
+    &.application:after{.fcon(1,4);}
+    &.picture:after{.fcon(2,4);}
+    &.camera:after{.fcon(3,4);}
+    &.pin:after{.fcon(4,4);}
+    &.storm:after{.fcon(5,4);}
+    &.page:after{.fcon(6,4);}
+    &.dribbble:after{.fcon(7,4);}
+
+    &.bin:after{.fcon(0,5);}
+    &.cog:after{.fcon(1,5);}
+    &.thumbs-up:after{.fcon(2,5);}
+    &.tag:after{.fcon(3,5);}
+    &.speaker:after{.fcon(4,5);}
+    &.music:after{.fcon(5,5);}
+    &.buoy:after{.fcon(6,5);}
+    &.studiofour:after{.fcon(7,5);}
+}

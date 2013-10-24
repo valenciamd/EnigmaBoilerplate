@@ -1,0 +1,192 @@
+/******************************************************************************************/
+/* Form Styles
+/******************************************************************************************/
+
+h2.center{
+    text-align:center;
+}
+
+/******************************************************************************************/
+/* Buttons
+/******************************************************************************************/
+button, a.button{
+    font-family:'Open Sans', sans-serif;
+    -webkit-appearance:none;
+    .inline-block();
+    background:#666;
+    border:solid 1px #333;
+    height:34px;
+    line-height:30px;
+    vertical-align:top;
+    padding:0 10px 0 0;
+    outline:none;
+    color:white;
+    min-width:150px;
+    font-weight:bold;
+    .border-radius(2px);
+    overflow:hidden;
+    text-align:center;
+    .box-sizing();
+    .transition(background-color 0.3s ease);
+    &:hover{
+        background-color:@blue;
+    }
+    &.logout:hover{
+        background-color:@hover;
+    }
+}
+
+/******************************************************************************************/
+/* Login and Register
+/******************************************************************************************/
+form#user_login, form#register{
+    display:block;
+    width:500px;
+    margin:80px auto;
+    .box-sizing();
+    background:@background;
+    padding:20px 50px;
+    .border-radius(5px);
+    .box-shadow(0 10px 10px -10px gray);
+    border-top:solid 3px @text;
+    h2{
+        color:#AEAEAE;
+        margin-bottom:20px;
+        text-align:center;
+        text-shadow:-1px -1px 1px #333, 1px 1px 1px white;
+    }
+    p{
+        text-align:center;
+        font-size:14px;
+        a{
+            text-decoration:underline;
+        }
+    }
+    .input-row:not(.checkbox){
+        display:block;
+        label{
+            display:block;
+            font-size:14px;
+        }
+        input{
+            .box-sizing();
+            border:none;
+            width:100%;
+            padding:10px 10px;
+            font-weight:300;
+            font-size:14px;
+            margin:5px 0 10px;
+            outline:none;
+            border:solid 1px transparent;
+            &:focus{
+                border:solid 1px @text;
+            }
+        }
+        .validation{
+            display:block;
+            position:relative;
+            .box-sizing();
+            border:none;
+            width:100%;
+            padding:5px 10px;
+            font-weight:300;
+            font-size:14px;
+            margin:5px 0 10px;
+            background:#EAEAEA;
+            display:none;
+            border-radius:3px;
+            &.accepted{
+                display:block;
+                background:@green;
+                color:white;
+            }
+            &.error{
+                display:block;
+                background:@red;
+                color:white;
+            }
+            &:before{
+                content:'';
+                display:block;
+                position:absolute;
+                .transform(rotate(45deg));
+                background:inherit;
+                top:-7px;
+                left:30px;
+                width:15px;
+                height:15px;
+            }
+        }
+    }
+    .checkbox{
+        label{
+            .inline-block();
+            line-height:20px;
+            vertical-align:top;
+            width:20px;
+            height:20px;
+            width:120px;
+            font-size:14px;
+        }
+        input{
+            width:20px;
+            height:20px;
+            margin-top:2px;
+            vertical-align:top;
+        }
+        a{
+            float:right;
+            line-height:20px;
+            vertical-align:top;
+            width:20px;
+            height:20px;
+            width:auto;
+            text-align:right;
+            font-size:14px;
+        }
+    }
+    .gcon.user{
+        margin-right:10px;
+    }
+}
+
+/******************************************************************************************/
+/* Error Displays
+/******************************************************************************************/
+.form-error{
+    position:absolute;
+    width:100%;
+    left:0;
+    padding:10px;
+    .box-sizing();
+    background:@red;
+    color:white;
+    text-align:center;
+    margin:0 auto;
+    p{
+        color:white;
+        margin:0;
+    }
+}
+
+/******************************************************************************************/
+/* Logout
+/******************************************************************************************/
+#logout{
+    position:absolute;
+    right:10px;
+    top:0;
+    height:100%;
+    .box-sizing();
+    padding:0;
+    margin-right:10px;
+    line-height:32px;
+    p{
+        display:block;
+        line-height:57px;
+        text-align:right;
+        padding:0;
+        margin:0;
+        vertical-align:top;
+    }
+}

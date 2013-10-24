@@ -1,0 +1,136 @@
+/******************************************************************************************/
+/* G-Cons Icon Styles
+/******************************************************************************************/
+
+@gSpriteGrid : 32px;
+
+.gcon(@x, @y){
+    background-position: -(@x*@gSpriteGrid) -(@y*@gSpriteGrid);
+}
+
+.gcon{
+    width:@gSpriteGrid;
+    height:@gSpriteGrid;
+    .inline-block();
+    float:left;
+    .clearfix();
+    &:before{
+        background:url(../images/icons/gcons.png) no-repeat;
+        width:@gSpriteGrid;
+        height:@gSpriteGrid;
+        float:left;
+        margin-right:10px;
+        position:relative;
+        z-index:0;
+        .inline-block();
+    }
+    &.save:before{.gcon(0,0);}
+    &.pin:before{.gcon(1,0);}
+    &.screen:before{.gcon(2,0);}
+    &.mouse:before{.gcon(3,0);}
+    &.edit:before{.gcon(4,0);}
+    &.chat:before{.gcon(5,0);}
+    &.settings:before{.gcon(6,0);}
+    &.print:before{.gcon(7,0);}
+    &.flag:before{.gcon(8,0);}
+    &.search:before{.gcon(9,0);}
+
+    &.user:before{.gcon(0,1);}
+    &.database:before{.gcon(1,1);}
+    &.headphones:before{.gcon(2,1);}
+    &.cogs:before{.gcon(3,1);}
+    &.cogs-alt:before{.gcon(4,1);}
+    &.email:before{.gcon(5,1);}
+    &.briefcase:before{.gcon(6,1);}
+    &.delete-file:before{.gcon(7,1);}
+    &.next-file:before{.gcon(8,1);}
+    &.group:before{.gcon(9,1);}
+
+    &.fire:before{.gcon(0,2);}
+    &.lamp:before{.gcon(1,2);}
+    &.male:before{.gcon(2,2);}
+    &.female:before{.gcon(3,2);}
+    &.network-pc:before{.gcon(4,2);}
+    &.wifi:before{.gcon(5,2);}
+    &.lookup:before{.gcon(6,2);}
+    &.usb:before{.gcon(7,2);}
+    &.copy-file:before{.gcon(8,2);}
+    &.add-file:before{.gcon(9,2);}
+
+    &.rss:before{.gcon(0,3);}
+    &.pie:before{.gcon(1,3);}
+    &.chat-alt:before{.gcon(2,3);}
+    &.smiley:before{.gcon(3,3);}
+    &.music:before{.gcon(4,3);}
+    &.bar-chart:before{.gcon(5,3);}
+    &.woman:before{.gcon(6,3);}
+    &.first-aid:before{.gcon(7,3);}
+    &.ipod:before{.gcon(8,3);}
+    &.fan:before{.gcon(9,3);}
+
+    &.computer:before{.gcon(0,4);}
+    &.bin:before{.gcon(1,4);}
+    &.bin-empty:before{.gcon(2,4);}
+    &.radar:before{.gcon(3,4);}
+    &.tree:before{.gcon(4,4);}
+    &.network:before{.gcon(5,4);}
+    &.fullscreen:before{.gcon(6,4);}
+    &.calc:before{.gcon(7,4);}
+    &.phone:before{.gcon(8,4);}
+    &.home:before{.gcon(9,4);}
+
+    &.fancy-globe:before{.gcon(0,5);}
+    &.bookmark:before{.gcon(1,5);}
+    &.battery:before{.gcon(2,5);}
+    &.paperclip:before{.gcon(3,5);}
+    &.mobile:before{.gcon(4,5);}
+    &.container:before{.gcon(5,5);}
+    &.wire-globe:before{.gcon(6,5);}
+    &.unlock:before{.gcon(7,5);}
+    &.lock:before{.gcon(8,5);}
+    &.arrow-circle:before{.gcon(9,5);}
+
+    &.plane:before{.gcon(0,6);}
+    &.van:before{.gcon(1,6);}
+    &.star:before{.gcon(2,6);}
+    &.id:before{.gcon(3,6);}
+    &.connected:before{.gcon(4,6);}
+    &.cassette:before{.gcon(5,6);}
+    &.heart:before{.gcon(6,6);}
+    &.cloud-fill:before{.gcon(7,6);}
+    &.cloud-outline:before{.gcon(8,6);}
+    &.boat:before{.gcon(9,6);}
+
+    &.connections:before{.gcon(0,7);}
+    &.beaker:before{.gcon(1,7);}
+    &.reload:before{.gcon(2,7);}
+    &.dollar:before{.gcon(3,7);}
+    &.calendar:before{.gcon(4,7);}
+    &.microphone:before{.gcon(5,7);}
+    &.leaves:before{.gcon(6,7);}
+    &.umbrella:before{.gcon(7,7);}
+    &.globe:before{.gcon(8,7);}
+    &.world:before{.gcon(9,7);}
+
+    &.addressbook:before{.gcon(0,8);}
+    &.scissors:before{.gcon(1,8);}
+    &.disc:before{.gcon(2,8);}
+    &.link:before{.gcon(3,8);}
+    &.tag:before{.gcon(4,8);}
+    &.iphone:before{.gcon(5,8);}
+    &.download:before{.gcon(6,8);}
+    &.server:before{.gcon(7,8);}
+    &.power:before{.gcon(8,8);}
+    &.ribbon:before{.gcon(9,8);}
+
+    &.flower:before{.gcon(0,9);}
+    &.wrench:before{.gcon(1,9);}
+    &.apple:before{.gcon(2,9);}
+    &.shield:before{.gcon(3,9);}
+    &.spark:before{.gcon(4,9);}
+    &.balance:before{.gcon(5,9);}
+    &.bird:before{.gcon(6,9);}
+    &.oil:before{.gcon(7,9);}
+    &.bars:before{.gcon(8,9);}
+    &.glasses:before{.gcon(9,9);}
+}
