@@ -1,3 +1,4 @@
+<!-- START template -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,8 +9,8 @@
         <meta name="description" content="{{site_description}}" />
         <meta name="keywords" content="{{site_keywords}}" />
 
-        <link rel="stylesheet" href="themes/{{site_theme}}/assets/css/styles.css" />
-        <script type="text/javascript" src="themes/{{site_theme}}/assets/js/lib/jquery.min.js"></script>
+        <link rel="stylesheet" href="{{site_root}}themes/{{site_theme}}/assets/css/styles.css" />
+        <script type="text/javascript" src="{{site_root}}themes/{{site_theme}}/assets/js/lib/jquery.min.js"></script>
         <!-- END head -->
     </head>
     <body>

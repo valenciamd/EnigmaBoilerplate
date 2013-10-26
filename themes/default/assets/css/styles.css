@@ -552,7 +552,7 @@ header .login-container .login {
   *zoom: 1;
   float: right;
   line-height: 30px;
-  min-width: 416px;
+  min-width: 417px;
   margin-top: 20px;
 }
 header .login-container .login:before,
@@ -644,6 +644,12 @@ nav#main_nav ul.navigation li {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+}
+nav#main_nav ul.navigation li:last-child {
+  border-right: none;
+}
+nav#main_nav ul.navigation li:first-child {
+  border-left: none;
 }
 nav#main_nav ul.navigation li a {
   display: block;
@@ -854,6 +860,11 @@ nav#main_nav ul.navigation li:hover .subnav {
   float: left;
   width: 820px;
   margin-left: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-left: 10px;
 }
 .page .content .hero-container {
   display: block;
@@ -872,14 +883,17 @@ nav#main_nav ul.navigation li:hover .subnav {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 0 10px;
+  padding: 0;
   margin-bottom: 20px;
   text-align: center;
 }
 .page .content .homepage-grid li div {
   display: block;
-  border: solid 1px #999;
-  min-height: 300px;
+}
+.page .content .homepage-grid li div img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 /******************************************************************************************/
 /* Footer

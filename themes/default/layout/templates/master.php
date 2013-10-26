@@ -1,5 +1,6 @@
-<!-- START page-2-col -->
+<!-- START content -->
 <div class="page two-col">
+    <!-- START sidebar -->
     <aside class="sidebar-left">
         <div class="sidebar-widget customer-services">
             <h5>Customer Services</h5>
@@ -11,17 +12,17 @@
 
         <div class="sidebar-widget newsletter-signup">
             <h5>Newsletter Signup</h5>
-            <form id="newsletter_signup" action="/salons/newletter/signup/" method="POST">
+            <form id="newsletter_signup" action="{{site_root}}newsletter/signup/" method="POST">
                 <input type="email" name="email" placeholder="Email Address" />
                 <button type="submit" name="newsletter_signup" value="true">Sign Up</button>
             </form>
         </div>
 
-        <!-- START promotions -->
-        <div class="sidebar-widget promo" id="{{promotion_id}}">
-            <a href="{{promotion_link}}"><img src="assets/images/content/blog-promo.png" /></a>
+        <!-- START sidebar_promotions -->
+        <div class="sidebar-widget promo" id="{{promo_id}}">
+            <a href="{{promo_link}}"><img src="{{promo_image}}" /></a>
         </div>
-        <!-- END promotions -->
+        <!-- END sidebar_promotions -->
     </aside>
     <div class="content">
         <!-- START hero -->
@@ -31,10 +32,10 @@
         <!-- END hero -->
 
         <ul class="homepage-grid">
-            <!-- START homepage_grid -->
-            <li><div><a href="{{grid_link}}">{{grid_image}}</a></div></li>
-            <!-- END homepage_grid -->
+            <!-- START homepage_promotions -->
+            <li id="{{promo_id}}}"><div><a href="{{promo_link}}"><img src="{{promo_image}}" /></a></div></li>
+            <!-- END homepage_promotions -->
         </ul>
     </div>
 </div>
-<!-- END page-2-col -->
+<!-- END content -->

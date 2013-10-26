@@ -5,13 +5,13 @@
             <img src="{{site_logo}}" alt="{{site_title}}" id="logo" />
             <h1>{{site_subtitle}}</h1>
         </a>
-        <img src="themes/{{site_theme}}/assets/images/structure/trade.png" class="trade" />
+        <img src="{{site_root}}themes/{{site_theme}}/assets/images/structure/trade.png" class="trade" />
     </div>
     <div class="login-container">
         <!-- START basket -->
         <div class="my-basket">
             <div class="basket">
-                <a href="basket/">
+                <a href="{{site_root}}basket/">
                     <span>My Basket</span>
                     <i class="icon-basket"></i>
                 </a>
@@ -25,22 +25,22 @@
         <!-- START login -->
         <div class="login">
             <h2>Log In:</h2>
-            <form id="login_user" action="customer/authenticate/" method="POST">
+            <form id="login_user" action="{{site_root}}customer/authenticate/" method="POST">
                 <div class="input-col">
                     <input type="email" name="user_email" placeholder="Email Address" />
-                    <small><a href="customer/register/">Register</a></small>
+                    <small><a href="{{site_root}}customer/register/">Register</a></small>
                 </div>
                 <div class="input-col">
                     <input type="password" name="user_pass" placeholder="Password" />
-                    <small><a href="customer/reset-password/">Forgot Password?</a></small>
+                    <small><a href="{{site_root}}customer/reset-password/">Forgot Password?</a></small>
                 </div>
                 <div class="input-col submit-col">
                     <input type="hidden" name="url_redirect" value="{{page_url}}" />
                     <button type="submit" name="login_user">Go</button>
-                    <small><a href="help/">Help</a> | <a href="contact/">Contact Us</a></small>
+                    <small><a href="{{site_root}}help/">Help</a> | <a href="{{site_root}}contact/">Contact Us</a></small>
                 </div>
             </form>
-            <img class="payment-methods" src="themes/{{site_theme}}/assets/images/structure/payment-methods.jpg" />
+            <img class="payment-methods" src="{{site_root}}themes/{{site_theme}}/assets/images/structure/payment-methods.jpg" />
         </div>
         <!-- END login -->
     </div><!-- /login container -->
