@@ -100,23 +100,27 @@ class Router{
         if($this->section == ''):
             $this->view .= '/index.php';
         else:
-            $this->view .= $this->section;
+            $this->view .= '/'.$this->section;
             $this->route_article();
         endif;
     }
     
     private function route_article(){
-        if($this->page === 'blog'):
-            $this->view .= '/article.php';
+        if($this->article !== ''):
+            if($this->page === 'blog'):
+                $this->view .= '/article.php';
+            else:
+                $this->view .= '/'.$this->article;
+                $this->route_action();
+            endif;
         else:
-            $this->view .= '/'.$this->article;
-            $this->route_action();
+            $this->view .= '/index.php';
         endif;
     }
     
     private function route_action(){
         if($this->action == ''):
-            $this->view .= '/index.php';
+            $this->view .= 'index.php';
         else:
             $this->view .= '/'.$this->action.'.php';
         endif;

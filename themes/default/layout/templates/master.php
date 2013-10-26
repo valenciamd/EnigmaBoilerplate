@@ -1,5 +1,6 @@
 <!-- START content -->
 <div class="page two-col">
+    <!-- START sidebar -->
     <aside class="sidebar-left">
         <div class="sidebar-widget customer-services">
             <h5>Customer Services</h5>
@@ -11,7 +12,7 @@
 
         <div class="sidebar-widget newsletter-signup">
             <h5>Newsletter Signup</h5>
-            <form id="newsletter_signup" action="{{site_root}}newletter/signup/" method="POST">
+            <form id="newsletter_signup" action="{{site_root}}newsletter/signup/" method="POST">
                 <input type="email" name="email" placeholder="Email Address" />
                 <button type="submit" name="newsletter_signup" value="true">Sign Up</button>
             </form>

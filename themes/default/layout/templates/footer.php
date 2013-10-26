@@ -1,16 +1,16 @@
             <!-- START footer -->
             <footer>
-                <!-- START social-links -->
+                
                 <ul class="social-links">
-                    <li><a href="{{social_link}}">{{social_link}}</a></li>
-                    <li><a href="{{social_link}}">{{social_link}}</a></li>
-                    <li><a href="{{social_link}}">{{social_link}}</a></li>
-                    <li><a href="{{social_link}}">{{social_link}}</a></li>
-                    <li><a href="{{social_link}}">{{social_link}}</a></li>
-                    <li><a href="{{social_link}}">{{social_link}}</a></li>
-                    <li><a href="{{social_link}}">{{social_link}}</a></li>
+                    <!-- START social_links -->
+                    <li>
+                        <a href="{{social_link}}">
+                            <img src="{{social_image}}" />
+                        </a>
+                    </li>
+                    <!-- END social_links -->
                 </ul>
-                <!-- END social-links -->
+                
                 
                 <!-- START footer-links -->
                 <div class="footer-links">
@@ -42,8 +42,10 @@
                 
                 <!-- START footer-info -->
                 <div class="footer-info">
-                    <span class="payment-methods"><img src="assets/images/structure/payment-methods.jpg" /></span>
-                    <address>{{address}}</address>
+                    <span class="payment-methods">
+                        <img src="{{site_root}}themes/{{site_theme}}/assets/images/structure/payment-methods.jpg" />
+                    </span>
+                    <address>{{site_address}}</address>
                     <div class="secure">{{trust_logo}}</div>
                 </div>
                 <!-- END footer-info -->
@@ -62,3 +64,4 @@
         </script>
     </body>
 </html>
+<!-- END template -->

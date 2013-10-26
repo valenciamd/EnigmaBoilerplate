@@ -1,3 +1,4 @@
+<!-- START template -->
 <!DOCTYPE html>
 <html>
     <head>
