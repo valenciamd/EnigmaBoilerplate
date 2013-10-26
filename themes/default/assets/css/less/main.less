@@ -267,7 +267,7 @@ header{
             .clearfix();
             float:right;
             line-height:30px;
-            min-width:416px;
+            min-width:417px;
             margin-top:20px;
             h2{
                 float:left;
@@ -329,6 +329,12 @@ nav#main_nav{
             border-right:solid 1px #555;
             border-left:solid 1px #111;
             .box-sizing();
+            &:last-child{
+                border-right:none;
+            }
+            &:first-child{
+                border-left:none;
+            }
             a{
                 display:block;
                 color:white;
@@ -500,6 +506,8 @@ nav#main_nav{
         float:left;
         width:820px;
         margin-left:10px;
+        .box-sizing();
+        padding-left:10px;
         .hero-container{
             display:block;
             height:250px;
@@ -518,8 +526,6 @@ nav#main_nav{
                 text-align:center;
                 div{
                     display:block;
-                    border:solid 1px #999;
-                    min-height:300px;
                 }
             }
         }
