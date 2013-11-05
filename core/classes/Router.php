@@ -57,7 +57,11 @@ class Router{
     }
     
     private function setup_shop($parts){
-        if(isset($parts[2]) && $parts[2] !== ''):
+        if(isset($parts[4]) && $parts[4] !== ''):
+            $this->shop = new Shop($parts[1], $parts[2], $parts[3], $parts[4]);
+        elseif(isset($parts[3]) && $parts[3] !== ''):
+            $this->shop = new Shop($parts[1], $parts[2], $parts[3]);
+        elseif(isset($parts[2]) && $parts[2] !== ''):
             $this->shop = new Shop($parts[1], $parts[2]);
         elseif(isset($parts[1]) && $parts[1] !== ''):
             $this->shop = new Shop($parts[1]);
@@ -87,10 +91,14 @@ class Router{
     }
     
     private function route_shop(){
-        if($this->shop->product):
+        if(is_int($this->shop->product)):
             $this->view .= '/product.php';
+        elseif($this->shop->brand):
+            $this->view .= '/brand.php';
+        elseif($this->shop->group):
+            $this->view .= '/group.php';
         elseif($this->shop->category):
-            $this->view .= '/index.php';
+            $this->view .= '/category.php';
         else:
             $this->page = '404.php';
         endif;
@@ -99,6 +107,8 @@ class Router{
     private function route_section(){
         if($this->section == ''):
             $this->view .= '/index.php';
+        elseif(file_exists($this->view.'/'.$this->section.'.php')):
+            $this->view .= '/'.$this->section.'.php';
         else:
             $this->view .= '/'.$this->section;
             $this->route_article();
@@ -120,9 +130,74 @@ class Router{
     
     private function route_action(){
         if($this->action == ''):
-            $this->view .= 'index.php';
+            $this->view .= '/index.php';
         else:
             $this->view .= '/'.$this->action.'.php';
         endif;
+    }
+    
+    public function add_data($bit){
+        $func = 'add_'.$bit.'_data';
+        call_user_func(array($this, $func));
+    }
+    
+    private function add_site_data(){
+        global $db;
+        $siteQuery = $db->query("SELECT s.*, n.* FROM site AS s INNER JOIN site_notices AS n ON s.site_notice = n.notice_id");
+        $siteCache = $db->cacheQuery();
+        $this->template->getPage()->addTag('template', array('SQL', $siteCache));
+    }
+    
+    private function add_footer_data(){
+        global $db;
+        $socialQuery = $db->query("SELECT * FROM social_links");
+        $socialCache = $db->cacheQuery();
+        $this->template->getPage()->addTag('social_links', array('SQL', $socialCache));
+    }
+    
+    private function add_shop_data(){
+        global $db;
+        $shopQuery = $db->query("SELECT * FROM shop");
+        $shopCache = $db->cacheQuery();
+        $this->template->getPage()->addTag('content', array('SQL', $shopCache));
+    }
+    
+    private function add_basket_data(){
+        global $db;
+        global $basket;
+        $basketData = array(
+            'basket_count'  => $basket->basketCount(),
+            'basket_price'  => $basket->basketTotal()
+        );
+        $basketCache = $db->cacheData($basketData);
+        $this->template->getPage()->addTag('basket', array('DATA', $basketCache));
+    }
+    
+    private function add_breadcrumb_data(){
+        global $db;
+        $breadcrumbData = array();
+        if($this->shop->category):
+            $breadcrumb = array(
+                'breadcrumb_link' => SITE_ROOT.'shop/'.strtolower(str_replace(' ', '-', $this->shop->category)).'/',
+                'breadcrumb_name' => ucwords(str_replace('-', ' ', $this->shop->category))
+            );
+            array_push($breadcrumbData, $breadcrumb);
+        endif;
+        if($this->shop->group):
+            $breadcrumb = array(
+                'breadcrumb_link' => SITE_ROOT.'shop/'.strtolower(str_replace(' ', '-', $this->shop->category)).'/'.strtolower(str_replace(' ', '-', $this->shop->group)).'/',
+                'breadcrumb_name' => ucwords(str_replace('-', ' ', $this->shop->group))
+            );
+            array_push($breadcrumbData, $breadcrumb);
+        endif;
+        if($this->shop->brand):
+            $breadcrumb = array(
+                'breadcrumb_link' => SITE_ROOT.'shop/'.strtolower(str_replace(' ', '-', $this->shop->category)).'/'.strtolower(str_replace(' ', '-', $this->shop->group)).'/'.strtolower(str_replace(' ', '-', $this->shop->brand)).'/',
+                'breadcrumb_name' => ucwords(str_replace('-', ' ', $this->shop->brand))
+            );
+            array_push($breadcrumbData, $breadcrumb);
+        endif;
+        $breadcrumbCache = $db->cacheData($breadcrumbData);
+        $this->template->getPage()->addTag('bc_links', array('DATA', $breadcrumbCache));
     }
 }

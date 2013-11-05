@@ -66,7 +66,11 @@ class Database{
     }
     
     public function dataFromCache($cacheId){
-        return $this->dataCache[$cacheId];
+        if($this->dataCache[$cacheId]):
+            return $this->dataCache[$cacheId];
+        else:
+            return false;
+        endif;
     }
     
     public function bind($param, $value, $type = null){

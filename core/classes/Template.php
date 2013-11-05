@@ -17,7 +17,7 @@ class Template{
     
     public function addTemplateBit($tag, $bit){
         if(strpos($bit, 'themes/') == FALSE):
-            $bit = 'themes/'.$this->site->getTheme().'/layout/templates/'.$bit.'.php';
+            $bit = 'themes/'.$this->site->getTheme().'/layout/modules/'.$bit.'.php';
         endif;
         $this->page->addTemplateBit($tag, $bit);
     }
@@ -67,15 +67,29 @@ class Template{
     
     private function replaceDataTags($tag, $cacheId){
         global $db;
-        $block = $this->page->getBlock($tag);
-        $old_block = $block;
-        while($tags = $db->dataFromCache($cacheId)):
-            foreach($tags as $ntag => $data):
+        if($tags = $db->dataFromCache($cacheId)):
+            if(is_array($tags)):
+                $block = '';
+                $old_block = $this->page->getBlock($tag);
+            else:
+                $block = $this->page->getBlock($tag);
+                $old_block = $block;
+            endif;
+            for($i = 0; $i < count($tags); $i++):
                 $new_block = $old_block;
-                $new_block = str_replace('{{'.$ntag.'}}', $data, $new_block);
-            endforeach;
-            $block .= $new_block;
-        endwhile;
+                if(is_array($tags) && isset($tags[$i])):
+                    foreach($tags[$i] as $ntag => $data):
+                        $new_block = str_replace('{{'.$ntag.'}}', $data, $new_block);
+                    endforeach;
+                    $block .= $new_block;
+                else:
+                    foreach($tags as $ntag => $data):
+                        $new_block = str_replace('{{'.$ntag.'}}', $data, $new_block);
+                    endforeach;
+                    $block = $new_block;
+                endif;
+            endfor;
+        endif;
         $pageContent = $this->page->getContent();
         $newContent = str_replace($old_block, $block, $pageContent);
         $this->page->setContent($newContent);
