@@ -1,12 +1,12 @@
 <?php
-// Include Globals
 global $db;
 global $basket;
+global $shop;
 
 // Select Template File
 $this->template->buildFromTemplates('default');
-// Set Page Title
-$this->template->getPage()->setTitle('Home');
+// Set Page Header
+$this->template->getPage()->setTitle('Shop '.ucwords($this->shop->category));
 
 // Add Site Head Template
 $this->template->addTemplateBit('head', 'global/head');
@@ -17,7 +17,7 @@ $this->template->addTemplateBit('navigation', 'global/navigation');
 // Add Site Search Template
 $this->template->addTemplateBit('site-search', 'site-search');
 // Add Content Template
-$this->template->addTemplateBit('content', 'home/front-page');
+$this->template->addTemplateBit('content', 'shop/category');
 // Add Footer Template
 $this->template->addTemplateBit('footer', 'global/footer');
 
@@ -28,14 +28,24 @@ $this->template->addTemplateBit('footer', 'global/footer');
 $sidebarPromoQuery = $db->query("SELECT * FROM sidebar_promotions ORDER BY promo_id ASC LIMIT 4");
 $sidebarPromoCache = $db->cacheQuery();
 $this->template->getPage()->addTag('sidebar_promotions', array('SQL', $sidebarPromoCache));
-// Add Hero Data
-$heroQuery = $db->query("SELECT * FROM hero_promotions");
-$heroCache = $db->cacheQuery();
-$this->template->getPage()->addTag('hero', array('SQL', $heroCache));
-// Add Homepage Promotion Data
-$homePromoQuery = $db->query("SELECT * FROM homepage_promotions ORDER BY promo_id ASC LIMIT 9");
-$homePromoCache = $db->cacheQuery();
-$this->template->getPage()->addTag('homepage_promotions', array('SQL', $homePromoCache));
+
+// Add Basket List Data
+$basketListData = $basket->getProducts();
+$basketListCache = $db->cacheData($basketListData);
+$this->template->getPage()->addTag('basket_list', array('DATA', $basketListCache));
+
+// Add Category Data
+$categoryData = array(
+    'category_title'    => ucwords($this->shop->category)
+);
+$categoryCache = $db->cacheData($categoryData);
+$this->template->getPage()->addTag('category', array('DATA', $categoryCache));
+
+// Add Category List Data
+$categoryQuery = $db->query("SELECT * FROM product_groups WHERE category_id = :id");
+$db->bind(':id', $this->shop->category_id);
+$categoryListCache = $db->cacheQuery();
+$this->template->getPage()->addTag('category_list', array('SQL', $categoryListCache));
 /*******************************************************************************
  * END PAGE SPECIFIC DATA
  ******************************************************************************/

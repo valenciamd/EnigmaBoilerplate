@@ -14,7 +14,7 @@ class User{
     private $email;                                                                                 // User's Email Address
     private $alias;                                                                                 // User's Alias (Username)
     private $loggedIn = false;                                                                      // User's Login Status (Default : false)
-    private $isAdmin = false;                                                                       // Is User Admin? (Default : false)
+    private $admin = false;                                                                       // Is User Admin? (Default : false)
     
     private $error = false;                                                                         // User Error Handler (Default : false)
     
@@ -37,8 +37,12 @@ class User{
         if(isset($_COOKIE[COOKIE_USERNAME]) && isset($_COOKIE[COOKIE_PASSWORD])):                   // If Username and Password Cookies are set
             $this->loginWithCookies();                                                              // Log user in using Cookies
         else:                                                                                       // If Username and Password Cookies are not set
-            return false;                                                                           //@return false
+            return false;                                                                           // @return false
         endif;
+    }
+    
+    public function isLoggedIn(){                                                                   /* Return Login Status of User */
+        return $this->loggedIn;                                                                     // @return boolean
     }
     
     public function assignData(array $data){                                                        /* Assign data to User Object from Array */
@@ -159,5 +163,9 @@ class User{
             $this->error = new Error('Update', 'The Passwords you entered did not match');          // Throw Error
             return false;                                                                           // @return false
         endif;
+    }
+    
+    public function getError(){
+        return $this->error->getError();
     }
 }

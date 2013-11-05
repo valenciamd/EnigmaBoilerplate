@@ -4,9 +4,9 @@ global $db;
 global $basket;
 
 // Select Template File
-$this->template->buildFromTemplates('default');
+$this->template->buildFromTemplates('checkout');
 // Set Page Title
-$this->template->getPage()->setTitle('Home');
+$this->template->getPage()->setTitle('Checkout');
 
 // Add Site Head Template
 $this->template->addTemplateBit('head', 'global/head');
@@ -17,25 +17,17 @@ $this->template->addTemplateBit('navigation', 'global/navigation');
 // Add Site Search Template
 $this->template->addTemplateBit('site-search', 'site-search');
 // Add Content Template
-$this->template->addTemplateBit('content', 'home/front-page');
+$this->template->addTemplateBit('content', 'checkout/complete');
 // Add Footer Template
 $this->template->addTemplateBit('footer', 'global/footer');
 
 /*******************************************************************************
  * START PAGE SPECIFIC DATA
  ******************************************************************************/
-// Add Sidebar Promotion Data
-$sidebarPromoQuery = $db->query("SELECT * FROM sidebar_promotions ORDER BY promo_id ASC LIMIT 4");
-$sidebarPromoCache = $db->cacheQuery();
-$this->template->getPage()->addTag('sidebar_promotions', array('SQL', $sidebarPromoCache));
-// Add Hero Data
-$heroQuery = $db->query("SELECT * FROM hero_promotions");
-$heroCache = $db->cacheQuery();
-$this->template->getPage()->addTag('hero', array('SQL', $heroCache));
-// Add Homepage Promotion Data
-$homePromoQuery = $db->query("SELECT * FROM homepage_promotions ORDER BY promo_id ASC LIMIT 9");
-$homePromoCache = $db->cacheQuery();
-$this->template->getPage()->addTag('homepage_promotions', array('SQL', $homePromoCache));
+// Add Basket List Data
+$basketListData = $basket->getProducts();
+$basketListCache = $db->cacheData($basketListData);
+$this->template->getPage()->addTag('basket_list', array('DATA', $basketListCache));
 /*******************************************************************************
  * END PAGE SPECIFIC DATA
  ******************************************************************************/
@@ -59,3 +51,5 @@ $this->add_data('site');
 $this->template->parseOutput();
 // Render Template to Page
 print $this->template->getPage()->getContent();
+
+$basket->emptyBasket();
