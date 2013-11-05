@@ -76,7 +76,6 @@ function define_cookies(){
     // Username
     $u_cookie_name = sha1("USERNAME|" . AUTH_KEY . "|" . AUTH_SALT);
     define("COOKIE_USERNAME", $u_cookie_name);
-    
     // Password
     $p_cookie_name = sha1("PASSWORD|" . AUTH_KEY . "|" . AUTH_SALT);
     define("COOKIE_PASSWORD", $p_cookie_name);
@@ -99,17 +98,18 @@ function safe_encode($string, $salt){
     return $string;
 }
 
+/*******************************************************************************
+ * USER FUNCTIONS
+ ******************************************************************************/
+
+/*******************************************************************************
+ * CHECK IF USER EMAIL EXISTS
+ ******************************************************************************/
 function check_email_exists($email){
     global $db;
-    
-    $db->query("
-        SELECT * 
-        FROM user
-        WHERE user_email = :email
-    ");
-    
+    $db->query("SELECT * FROM user
+        WHERE user_email = :email");
     $db->bind(':email', $email);
-    
     if($result = $db->result()):
         return $result;
     else:
@@ -117,17 +117,14 @@ function check_email_exists($email){
     endif;
 }
 
+/*******************************************************************************
+ * CHECK IF USERNAME EXISTS
+ ******************************************************************************/
 function check_user_exists($username){
     global $db;
-    
-    $db->query("
-        SELECT *
-        FROM user
-        WHERE user_alias = :alias
-    ");
-    
+    $db->query("SELECT * FROM user
+        WHERE user_alias = :alias");
     $db->bind(':alias', $username);
-    
     if($result = $db->result()):
         return $result;
     else:

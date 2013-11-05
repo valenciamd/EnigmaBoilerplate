@@ -14,8 +14,12 @@ ob_start();
  ******************************************************************************/
 require_once('config.php');
 
-$router = new Router();
+global $site, $user, $router;
+
 $site = new Site();
+$user = new User();
+$basket = new Basket();
+$router = new Router();
 
 /*******************************************************************************
  * FLUSH THE OUTPUT BUFFER
