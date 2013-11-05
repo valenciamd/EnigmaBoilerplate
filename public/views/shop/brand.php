@@ -6,7 +6,7 @@ global $shop;
 // Select Template File
 $this->template->buildFromTemplates('default');
 // Set Page Header
-$this->template->getPage()->setTitle('Shop '.ucwords($this->shop->category));
+$this->template->getPage()->setTitle(ucwords(str_replace('-', ' ', $this->shop->brand)));
 
 // Add Site Head Template
 $this->template->addTemplateBit('head', 'global/head');
@@ -17,9 +17,18 @@ $this->template->addTemplateBit('navigation', 'global/navigation');
 // Add Site Search Template
 $this->template->addTemplateBit('site-search', 'site-search');
 // Add Content Template
-$this->template->addTemplateBit('content', 'shop/category');
+$this->template->addTemplateBit('content', 'shop/brand');
 // Add Footer Template
 $this->template->addTemplateBit('footer', 'global/footer');
+
+/*******************************************************************************
+ * START PAGE SPECIFIC TEMPLATES
+ ******************************************************************************/
+// Add Shop Breadcrumbs
+$this->template->addTemplateBit('breadcrumbs', 'shop/static/breadcrumbs');
+/*******************************************************************************
+ * END PAGE SPECIFIC TEMPLATES
+ ******************************************************************************/
 
 /*******************************************************************************
  * START PAGE SPECIFIC DATA
@@ -34,18 +43,22 @@ $basketListData = $basket->getProducts();
 $basketListCache = $db->cacheData($basketListData);
 $this->template->getPage()->addTag('basket_list', array('DATA', $basketListCache));
 
-// Add Category Data
-$categoryData = array(
-    'category_title'    => ucwords($this->shop->category)
+// Add Brand Data
+$brandQuery = $db->query("SELECT * FROM product_brands WHERE brand_id = :id");
+$db->bind(':id', $this->shop->brand_id);
+$brandCache = $db->cacheQuery();
+/*$brandData = array(
+    'brand_title'    => ucwords($this->shop->brand)
 );
-$categoryCache = $db->cacheData($categoryData);
-$this->template->getPage()->addTag('category', array('DATA', $categoryCache));
+$brandCache = $db->cacheData($brandData);*/
+$this->template->getPage()->addTag('brand', array('SQL', $brandCache));
 
 // Add Category List Data
-$categoryQuery = $db->query("SELECT * FROM product_groups WHERE category_id = :id");
-$db->bind(':id', $this->shop->category_id);
-$categoryListCache = $db->cacheQuery();
-$this->template->getPage()->addTag('category_list', array('SQL', $categoryListCache));
+$brandQuery = $db->query("SELECT * FROM products WHERE prod_category = :cat_id AND prod_brand = :brand_id");
+$db->bind(':cat_id', $this->shop->category_id);
+$db->bind(':brand_id', $this->shop->brand_id);
+$brandListCache = $db->cacheQuery();
+$this->template->getPage()->addTag('brand_list', array('SQL', $brandListCache));
 /*******************************************************************************
  * END PAGE SPECIFIC DATA
  ******************************************************************************/
@@ -59,6 +72,8 @@ $this->add_data('shop');
 $this->add_data('footer');
 // Add Basket Data to Template
 $this->add_data('basket');
+// Add Breadcrumb Data to Template
+$this->add_data('breadcrumb');
 // Add Site Data to Template
 $this->add_data('site');
 /*******************************************************************************

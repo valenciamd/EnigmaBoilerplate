@@ -6,7 +6,7 @@ global $shop;
 // Select Template File
 $this->template->buildFromTemplates('default');
 // Set Page Header
-$this->template->getPage()->setTitle('Shop '.ucwords($this->shop->category));
+$this->template->getPage()->setTitle(ucwords($this->shop->group));
 
 // Add Site Head Template
 $this->template->addTemplateBit('head', 'global/head');
@@ -17,9 +17,18 @@ $this->template->addTemplateBit('navigation', 'global/navigation');
 // Add Site Search Template
 $this->template->addTemplateBit('site-search', 'site-search');
 // Add Content Template
-$this->template->addTemplateBit('content', 'shop/category');
+$this->template->addTemplateBit('content', 'shop/group');
 // Add Footer Template
 $this->template->addTemplateBit('footer', 'global/footer');
+
+/*******************************************************************************
+ * START PAGE SPECIFIC TEMPLATES
+ ******************************************************************************/
+// Add Shop Breadcrumbs
+$this->template->addTemplateBit('breadcrumbs', 'shop/static/breadcrumbs');
+/*******************************************************************************
+ * END PAGE SPECIFIC TEMPLATES
+ ******************************************************************************/
 
 /*******************************************************************************
  * START PAGE SPECIFIC DATA
@@ -35,17 +44,17 @@ $basketListCache = $db->cacheData($basketListData);
 $this->template->getPage()->addTag('basket_list', array('DATA', $basketListCache));
 
 // Add Category Data
-$categoryData = array(
-    'category_title'    => ucwords($this->shop->category)
+$groupData = array(
+    'group_title'    => ucwords($this->shop->group)
 );
-$categoryCache = $db->cacheData($categoryData);
-$this->template->getPage()->addTag('category', array('DATA', $categoryCache));
+$groupCache = $db->cacheData($groupData);
+$this->template->getPage()->addTag('group', array('DATA', $groupCache));
 
 // Add Category List Data
-$categoryQuery = $db->query("SELECT * FROM product_groups WHERE category_id = :id");
-$db->bind(':id', $this->shop->category_id);
-$categoryListCache = $db->cacheQuery();
-$this->template->getPage()->addTag('category_list', array('SQL', $categoryListCache));
+$groupQuery = $db->query("SELECT p.*, b.* FROM products AS p INNER JOIN product_brands AS b ON b.brand_id = p.prod_brand WHERE p.prod_group = :group_id GROUP BY p.prod_brand");
+$db->bind(':group_id', $this->shop->group_id);
+$groupListCache = $db->cacheQuery();
+$this->template->getPage()->addTag('group_list', array('SQL', $groupListCache));
 /*******************************************************************************
  * END PAGE SPECIFIC DATA
  ******************************************************************************/
@@ -59,6 +68,8 @@ $this->add_data('shop');
 $this->add_data('footer');
 // Add Basket Data to Template
 $this->add_data('basket');
+// Add Breadcrumb Data to Template
+$this->add_data('breadcrumb');
 // Add Site Data to Template
 $this->add_data('site');
 /*******************************************************************************

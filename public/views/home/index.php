@@ -1,45 +1,59 @@
 <?php
-// Include Global Database
+// Include Globals
 global $db;
+global $basket;
+
 // Select Template File
-$this->template->buildFromTemplates('test');
+$this->template->buildFromTemplates('default');
 // Set Page Title
 $this->template->getPage()->setTitle('Home');
 
 // Add Site Head Template
-$this->template->addTemplateBit('head', 'head');
+$this->template->addTemplateBit('head', 'global/head');
 // Add Header Template
-$this->template->addTemplateBit('header', 'header');
+$this->template->addTemplateBit('header', 'global/header');
 // Add Navigation Template
-$this->template->addTemplateBit('navigation', 'navigation');
+$this->template->addTemplateBit('navigation', 'global/navigation');
 // Add Site Search Template
 $this->template->addTemplateBit('site-search', 'site-search');
 // Add Content Template
-$this->template->addTemplateBit('content', 'master');
+$this->template->addTemplateBit('content', 'home/front-page');
 // Add Footer Template
-$this->template->addTemplateBit('footer', 'footer');
+$this->template->addTemplateBit('footer', 'global/footer');
 
-// Add Shop Data
-$shopQuery = $db->query("SELECT * FROM shop");
-$shopCache = $db->cacheQuery();
-$this->template->getPage()->addTag('content', array('SQL', $shopCache));
+/*******************************************************************************
+ * START PAGE SPECIFIC DATA
+ ******************************************************************************/
 // Add Sidebar Promotion Data
-$sidebarQuery = $db->query("SELECT * FROM sidebar_promotions ORDER BY promo_id ASC LIMIT 4");
-$sidebarCache = $db->cacheQuery();
-$this->template->getPage()->addTag('sidebar_promotions', array('SQL', $sidebarCache));
+$sidebarPromoQuery = $db->query("SELECT * FROM sidebar_promotions ORDER BY promo_id ASC LIMIT 4");
+$sidebarPromoCache = $db->cacheQuery();
+$this->template->getPage()->addTag('sidebar_promotions', array('SQL', $sidebarPromoCache));
+// Add Hero Data
+$heroQuery = $db->query("SELECT * FROM hero_promotions");
+$heroCache = $db->cacheQuery();
+$this->template->getPage()->addTag('hero', array('SQL', $heroCache));
 // Add Homepage Promotion Data
 $homePromoQuery = $db->query("SELECT * FROM homepage_promotions ORDER BY promo_id ASC LIMIT 9");
 $homePromoCache = $db->cacheQuery();
 $this->template->getPage()->addTag('homepage_promotions', array('SQL', $homePromoCache));
-// Add Footer Data
-$socialQuery = $db->query("SELECT * FROM social_links");
-$socialCache = $db->cacheQuery();
-$this->template->getPage()->addTag('social_links', array('SQL', $socialCache));
+/*******************************************************************************
+ * END PAGE SPECIFIC DATA
+ ******************************************************************************/
 
+/*******************************************************************************
+ * START GLOBALLY DEFINED DATA
+ ******************************************************************************/
+// Add Shop Data to Template
+$this->add_data('shop');
+// Add Footer Data to Template
+$this->add_data('footer');
+// Add Basket Data to Template
+$this->add_data('basket');
 // Add Site Data to Template
-$siteQuery = $db->query("SELECT * FROM site");
-$siteCache = $db->cacheQuery();
-$this->template->getPage()->addTag('template', array('SQL', $siteCache));
+$this->add_data('site');
+/*******************************************************************************
+ * END GLOBALLY DEFINED DATA
+ ******************************************************************************/
 
 // Parse Template Output (Add Data to Template Tags)
 $this->template->parseOutput();

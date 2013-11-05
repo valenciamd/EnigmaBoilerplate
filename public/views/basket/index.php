@@ -1,12 +1,12 @@
 <?php
+// Include Globals
 global $db;
 global $basket;
-global $shop;
 
 // Select Template File
 $this->template->buildFromTemplates('default');
-// Set Page Header
-$this->template->getPage()->setTitle('Shop '.ucwords($this->shop->category));
+// Set Page Title
+$this->template->getPage()->setTitle('Basket');
 
 // Add Site Head Template
 $this->template->addTemplateBit('head', 'global/head');
@@ -17,7 +17,7 @@ $this->template->addTemplateBit('navigation', 'global/navigation');
 // Add Site Search Template
 $this->template->addTemplateBit('site-search', 'site-search');
 // Add Content Template
-$this->template->addTemplateBit('content', 'shop/category');
+$this->template->addTemplateBit('content', 'basket/list');
 // Add Footer Template
 $this->template->addTemplateBit('footer', 'global/footer');
 
@@ -33,19 +33,6 @@ $this->template->getPage()->addTag('sidebar_promotions', array('SQL', $sidebarPr
 $basketListData = $basket->getProducts();
 $basketListCache = $db->cacheData($basketListData);
 $this->template->getPage()->addTag('basket_list', array('DATA', $basketListCache));
-
-// Add Category Data
-$categoryData = array(
-    'category_title'    => ucwords($this->shop->category)
-);
-$categoryCache = $db->cacheData($categoryData);
-$this->template->getPage()->addTag('category', array('DATA', $categoryCache));
-
-// Add Category List Data
-$categoryQuery = $db->query("SELECT * FROM product_groups WHERE category_id = :id");
-$db->bind(':id', $this->shop->category_id);
-$categoryListCache = $db->cacheQuery();
-$this->template->getPage()->addTag('category_list', array('SQL', $categoryListCache));
 /*******************************************************************************
  * END PAGE SPECIFIC DATA
  ******************************************************************************/

@@ -1,12 +1,13 @@
 <?php
 global $db;
 global $basket;
-global $shop;
 
 // Select Template File
 $this->template->buildFromTemplates('default');
 // Set Page Header
-$this->template->getPage()->setTitle('Shop '.ucwords($this->shop->category));
+$product = $db->resultsFromCache($this->shop->product);
+$title = $product[0]['prod_title'];
+$this->template->getPage()->setTitle($title);
 
 // Add Site Head Template
 $this->template->addTemplateBit('head', 'global/head');
@@ -17,9 +18,24 @@ $this->template->addTemplateBit('navigation', 'global/navigation');
 // Add Site Search Template
 $this->template->addTemplateBit('site-search', 'site-search');
 // Add Content Template
-$this->template->addTemplateBit('content', 'shop/category');
+$this->template->addTemplateBit('content', 'shop/product');
 // Add Footer Template
 $this->template->addTemplateBit('footer', 'global/footer');
+
+/*******************************************************************************
+ * START PAGE SPECIFIC TEMPLATES
+ ******************************************************************************/
+// Add Product Rating
+$this->template->addTemplateBit('product_rating', 'shop/static/product-rating');
+// Add Favorites Bar
+$this->template->addTemplateBit('favorites_bar', 'shop/static/favorites-bar');
+// Add Social Bar
+$this->template->addTemplateBit('social_bar', 'shop/static/social-bar');
+// Add Shop Breadcrumbs
+$this->template->addTemplateBit('breadcrumbs', 'shop/static/breadcrumbs');
+/*******************************************************************************
+ * END PAGE SPECIFIC TEMPLATES
+ ******************************************************************************/
 
 /*******************************************************************************
  * START PAGE SPECIFIC DATA
@@ -34,18 +50,36 @@ $basketListData = $basket->getProducts();
 $basketListCache = $db->cacheData($basketListData);
 $this->template->getPage()->addTag('basket_list', array('DATA', $basketListCache));
 
-// Add Category Data
-$categoryData = array(
-    'category_title'    => ucwords($this->shop->category)
-);
-$categoryCache = $db->cacheData($categoryData);
-$this->template->getPage()->addTag('category', array('DATA', $categoryCache));
+// Add Product Data
+$this->template->getPage()->addTag('product', array('SQL', $this->shop->product));
 
-// Add Category List Data
-$categoryQuery = $db->query("SELECT * FROM product_groups WHERE category_id = :id");
-$db->bind(':id', $this->shop->category_id);
-$categoryListCache = $db->cacheQuery();
-$this->template->getPage()->addTag('category_list', array('SQL', $categoryListCache));
+// Get Product Rating
+$rating = $this->shop->productRating();
+$this->template->getPage()->addTag('star_rating', array('DATA', $rating));
+
+// Get Special Offers
+$offerQuery = $db->query("SELECT brand_offer FROM product_brands WHERE brand_id = :id");
+$db->bind(':id', $this->shop->brand_id);
+$offerCache = $db->cacheQuery($offerQuery);
+$this->template->getPage()->addTag('special_offers', array('SQL', $offerCache));
+
+// Get Product Availability
+$prod = $db->resultsFromCache($this->shop->product);
+$stock = $prod[0]['prod_stock'];
+if($stock > 0):
+    $stockAvailable = array(
+        'stock_class'   => 'available',
+        'stock_text'    => 'In Stock'
+    );
+else:
+    $stockAvailable = array(
+        'stock_class' => 'unavailable',
+        'stock_text'    => 'Sold Out'
+    );
+endif;
+$stockCache = $db->cacheData($stockAvailable);
+$this->template->getPage()->addTag('stock_available', array('DATA', $stockCache));
+
 /*******************************************************************************
  * END PAGE SPECIFIC DATA
  ******************************************************************************/
@@ -59,6 +93,8 @@ $this->add_data('shop');
 $this->add_data('footer');
 // Add Basket Data to Template
 $this->add_data('basket');
+// Add Breadcrumb Data to Template
+$this->add_data('breadcrumb');
 // Add Site Data to Template
 $this->add_data('site');
 /*******************************************************************************
